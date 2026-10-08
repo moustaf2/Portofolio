@@ -13,6 +13,6 @@ Open [http://localhost:3000](http://localhost:3000). The root URL redirects to `
 
 ## Editing content
 
-All texts for both languages live in `src/data/profile.ts`. Screenshots are in `public/screenshots/`.
+All texts for both languages live in `src/data/profile.ts`. Each section of the page is a component in `src/components/`. Screenshots are in `public/projects/paper-integrity/`.
 
-To add the photo, put it in `public/` and set `profile.photo` in `src/data/profile.ts`.
+To add the photo, put it in `public/` and replace the initials circle in `src/components/About.tsx`.

@@ -190,7 +190,7 @@ const certificates = [
 
 const en: Content = {
   meta: {
-    title: "Moustafa Mohamed — Software Engineer",
+    title: "Moustafa Mohamed — Software Developer",
     description:
       "Software engineer in Magdeburg. Web applications from end to end with React, TypeScript, Python and FastAPI. Open to full-time roles and freelance projects.",
   },

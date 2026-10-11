@@ -11,6 +11,11 @@ export const contact = {
   initials: "MM",
   email: "moustafa.work501@gmail.com",
   linkedin: "https://www.linkedin.com/in/moustafa-mohamed-51bb66232/",
+  // German CV for both languages until an English one exists
+  cv: "/cv/Moustafa-Mohamed-Lebenslauf.pdf",
+  photo: "/moustafa.webp",
+  // TODO: link to the 90-second demo video; while empty, the button shows a placeholder
+  demoUrl: "",
 };
 
 export type Screenshot = {
@@ -21,600 +26,870 @@ export type Screenshot = {
   alt: string;
 };
 
+export type IconName =
+  | "code"
+  | "layout"
+  | "server"
+  | "database"
+  | "brain"
+  | "wrench"
+  | "app"
+  | "sparkles"
+  | "globe"
+  | "gauge"
+  | "football"
+  | "plane"
+  | "book"
+  | "chess";
+
+type SectionHead = { label: string; title: string };
+
 type Content = {
   meta: { title: string; description: string };
   nav: {
-    projects: string;
-    services: string;
-    experience: string;
-    skills: string;
     about: string;
+    experience: string;
+    projects: string;
+    skills: string;
+    services: string;
+    hobbies: string;
     contact: string;
+    sections: string;
   };
   hero: {
-    eyebrow: string;
-    headline: string;
+    badge: string;
+    title: string;
     lead: string;
     primaryCta: string;
-    secondaryCta: string;
-    stats: { value: string; label: string }[];
+    cvCta: string;
+    cvNote: string;
+    emailLabel: string;
+    linkedinLabel: string;
+    photoAlt: string;
   };
-  projects: {
-    eyebrow: string;
-    title: string;
-    featured: {
-      tag: string;
-      name: string;
-      summary: string;
-      problemTitle: string;
-      problem: string;
-      builtTitle: string;
-      built: string[];
-      resultTitle: string;
-      resultValue: string;
-      result: string;
-      note: string;
-      indicatorsTitle: string;
-      indicators: { name: string; weight: number; detail: string }[];
-      stack: string[];
-      resultFrame: { label: string; shots: Screenshot[] };
-      gallery: Screenshot[];
-    };
-    more: { tag: string; name: string; description: string; stack: string[] }[];
-  };
-  services: {
-    eyebrow: string;
-    title: string;
-    items: { name: string; description: string; tags: string[] }[];
-  };
-  experience: {
-    eyebrow: string;
-    title: string;
-    items: {
-      company: string;
-      location: string;
-      role: string;
-      period: string;
-      context?: string;
-      points: string[];
-    }[];
-  };
-  skills: {
-    eyebrow: string;
-    title: string;
-    groups: { name: string; primary?: boolean; items: string[] }[];
-  };
-  about: {
-    eyebrow: string;
-    title: string;
+  about: SectionHead & {
     bio: string[];
-    photoPlaceholder: string;
-    location: string;
-    educationTitle: string;
-    education: { degree: string; school: string; detail: string };
     languagesTitle: string;
-    languages: { name: string; level: string }[];
+    languages: { name: string; level: string; steps: number }[];
     certificatesTitle: string;
     certificates: { name: string; issuer: string }[];
   };
-  contact: {
-    eyebrow: string;
-    title: string;
-    lead: string;
-    emailLabel: string;
-    linkedinLabel: string;
+  experience: SectionHead & {
+    techLabel: string;
+    educationLabel: string;
+    items: {
+      kind: "work" | "education";
+      title: string;
+      org: string;
+      location: string;
+      period: string;
+      context?: string;
+      points: string[];
+      tech: string[];
+    }[];
   };
-  footer: { note: string };
+  projects: SectionHead & {
+    featured: {
+      meta: string;
+      name: string;
+      summary: string;
+      roleLabel: string;
+      role: string;
+      shot: Screenshot;
+      stack: string[];
+      resultValue: string;
+      resultLabel: string;
+      demoCta: string;
+      demoPlaceholder: string;
+      walkthroughCta: string;
+      walkthroughSubject: string;
+      sourceNote: string;
+      caseStudy: {
+        toggle: string;
+        steps: { title: string; text?: string; points?: string[] }[];
+        indicatorsTitle: string;
+        indicators: { name: string; weight: number; detail: string }[];
+        techTitle: string;
+        tech: string[];
+        screensTitle: string;
+        gallery: Screenshot[];
+        note: string;
+      };
+    };
+    moreTitle: string;
+    partLabel: string;
+    toolsLabel: string;
+    more: {
+      name: string;
+      type: string;
+      description: string;
+      part: string[];
+      tools: string[];
+      extra: string[];
+    }[];
+  };
+  skills: SectionHead & {
+    groups: { name: string; icon: IconName; strong: number; items: string[] }[];
+  };
+  services: SectionHead & {
+    getsLabel: string;
+    items: {
+      name: string;
+      icon: IconName;
+      wide?: boolean;
+      description: string;
+      gets: string[];
+      tags: string[];
+    }[];
+    closing: { text: string; button: string };
+  };
+  hobbies: SectionHead & {
+    motto: string;
+    sub: string;
+    items: { name: string; icon: IconName }[];
+  };
+  contact: SectionHead & {
+    lead: string;
+    emailTitle: string;
+    emailAction: string;
+    copy: string;
+    copied: string;
+    linkedinTitle: string;
+    linkedinAction: string;
+    cvTitle: string;
+    cvAction: string;
+  };
+  footer: { rights: string; impressum: string };
+  impressum: {
+    title: string;
+    back: string;
+    lawLabel: string;
+    addressLabel: string;
+    addressPending: string;
+    contactLabel: string;
+    responsibleLabel: string;
+  };
 };
 
 const shotBase = "/projects/paper-integrity";
 
+const shots = {
+  score: { src: `${shotBase}/score.png`, width: 876, height: 206 },
+  indicators: { src: `${shotBase}/key-indicators.png`, width: 1441, height: 563 },
+  upload: { src: `${shotBase}/upload.png`, width: 1179, height: 659 },
+  evidence: { src: `${shotBase}/highlighted-text.png`, width: 1444, height: 630 },
+  related: { src: `${shotBase}/related-papers.png`, width: 1417, height: 739 },
+  actions: { src: `${shotBase}/recommended-actions.png`, width: 1444, height: 456 },
+};
+
+const certificates = [
+  { name: "Node.js, Express, MongoDB", issuer: "Udemy" },
+  { name: "Introduction to Databases for Back-End Development", issuer: "Meta / Coursera, 2025" },
+  { name: "Programming in Python", issuer: "Meta / Coursera, 2023" },
+];
+
 const en: Content = {
   meta: {
-    title: "Moustafa Mohamed — Software Developer",
+    title: "Moustafa Mohamed — Software Engineer",
     description:
-      "Software developer in Magdeburg. React and TypeScript on a production SaaS product, full-stack apps with Python and FastAPI. Open to full-time roles and freelance projects.",
+      "Software engineer in Magdeburg. Web applications from end to end with React, TypeScript, Python and FastAPI. Open to full-time roles and freelance projects.",
   },
   nav: {
-    projects: "Projects",
-    services: "Services",
-    experience: "Experience",
-    skills: "Skills",
     about: "About",
+    experience: "Experience",
+    projects: "Projects",
+    skills: "Skills",
+    services: "Services",
+    hobbies: "Hobbies",
     contact: "Contact",
+    sections: "Sections",
   },
   hero: {
-    eyebrow: "Software Developer · Magdeburg, Germany",
-    headline: "I build web apps people understand at first glance.",
-    lead: "React and TypeScript on a production SaaS product. A thesis app that test users rated 80.87 on the System Usability Scale. Open to a full-time developer role and to freelance projects.",
+    badge: "Open to full-time roles and freelance projects",
+    title: "Software Engineer",
+    lead: "I started by writing every line by hand. Now I work with AI to build faster, then review, test, and optimize the result so it’s reliable and fast.",
     primaryCta: "View projects",
-    secondaryCta: "Get in touch",
-    stats: [
-      { value: "80.87", label: "SUS usability score, 16-person study" },
-      { value: "9 months", label: "on a production SaaS product" },
-      { value: "DE · EN · AR", label: "C1, C1 and native" },
+    cvCta: "Download CV",
+    cvNote: "PDF, German",
+    emailLabel: "Email",
+    linkedinLabel: "LinkedIn",
+    photoAlt: "Portrait of Moustafa Mohamed",
+  },
+  about: {
+    label: "About",
+    title: "Who am I",
+    bio: [
+      "I'm a software developer based in Magdeburg, Germany. I build web applications from end to end: the interface with React and TypeScript, and the logic behind it with Python and FastAPI or Node.js. I use AI models every day to make my work faster and my life easier.",
+      "I studied Business Informatics (B.Sc.) at Otto von Guericke University Magdeburg. That mix of business and computer science shapes how I work: I want to understand what a company needs before I write the first line of code. I'm just as comfortable joining an existing codebase and adding new features to it.",
+      "As a working student at aiio, I worked on a production SaaS product for AI-supported process management. I turned user stories into features, connected the interface to REST APIs, built multilingual screens and took part in code reviews. Before that, during an internship in Munich, I improved the structure, speed and design of WordPress websites.",
+      "For my bachelor thesis I designed and built the Paper Integrity Analyzer, a web app that checks scientific papers for signs of fraud and explains the result in plain language. In a study with 16 test users it reached a usability score of 80.87 out of 100. That project showed me what I enjoy most: making complicated things easy to understand.",
+      "I speak German, English and Arabic, and I'm open to relocating. I'm looking for a full-time position as a software engineer, and I also take on freelance projects.",
+    ],
+    languagesTitle: "Languages",
+    languages: [
+      { name: "German", level: "C1", steps: 4 },
+      { name: "English", level: "C1", steps: 4 },
+      { name: "Arabic", level: "Native", steps: 5 },
+    ],
+    certificatesTitle: "Certificates",
+    certificates,
+  },
+  experience: {
+    label: "Experience",
+    title: "Where I have worked",
+    techLabel: "Tech",
+    educationLabel: "Education",
+    items: [
+      {
+        kind: "work",
+        title: "Working Student, AI-based Software Development",
+        org: "aiio GmbH",
+        location: "Magdeburg",
+        period: "June 2025 – February 2026",
+        context: "SaaS product for AI-supported process management on Microsoft 365.",
+        points: [
+          "Turned user stories and requirements into features with React and TypeScript, extending existing components.",
+          "Integrated REST APIs to fetch backend data and display it across components.",
+          "Took part in code reviews, testing and bug analysis.",
+          "Built multilingual interfaces with i18n and Strapi.",
+        ],
+        tech: ["React", "TypeScript", "REST APIs", "i18n", "Strapi"],
+      },
+      {
+        kind: "work",
+        title: "Software Developer Intern",
+        org: "Mindful Minds Management",
+        location: "Munich",
+        period: "September 2024 – December 2024",
+        points: [
+          "Improved website performance and fixed technical issues through regular testing.",
+          "Developed and adapted the front end with HTML and CSS.",
+          "Restructured site layout and navigation to make it easier to use.",
+          "Customised WordPress themes and plugins and extended existing features.",
+        ],
+        tech: ["HTML", "CSS", "WordPress"],
+      },
+      {
+        kind: "education",
+        title: "B.Sc. Business Informatics",
+        org: "Otto von Guericke University Magdeburg",
+        location: "Magdeburg",
+        period: "Completed July 2026",
+        points: [],
+        tech: [],
+      },
     ],
   },
   projects: {
-    eyebrow: "Projects",
+    label: "Projects",
     title: "Work you can look at",
     featured: {
-      tag: "Bachelor thesis · 2026",
+      meta: "Bachelor thesis · Solo project · 2026",
       name: "Paper Integrity Analyzer",
       summary:
         "A web app that checks a scientific PDF for warning signs of fake papers and explains the result in plain language.",
-      problemTitle: "The problem",
-      problem:
-        "Tools like Turnitin, Copyleaks and GPTZero show scores and highlights, but users often cannot tell why a document was flagged or what to do next.",
-      builtTitle: "What I built",
-      built: [
-        "A three-step flow: home page, drag-and-drop PDF upload, result page.",
-        "A result page in layers: the decision and score first, then the indicators, then the evidence, then recommended actions.",
-        "An analysis backend that combines four integrity indicators into one weighted risk score.",
-      ],
-      resultTitle: "The result",
+      roleLabel: "Role",
+      role: "Design, frontend, backend",
+      shot: {
+        ...shots.score,
+        label: "Result page",
+        alt: "Result banner reading 'Final Decision: Likely Fake Paper' with a 63% fake score",
+      },
+      stack: ["React", "TypeScript", "Python", "FastAPI"],
       resultValue: "80.87",
-      result:
-        "System Usability Scale score in a study with 16 participants from computer science, business, engineering and medicine. Above 80 counts as high usability.",
-      note: "Built to support human review, not to replace it. The thesis focused on usability and explanation, not on detection accuracy.",
-      indicatorsTitle: "How the risk score is weighted",
-      indicators: [
-        {
-          name: "Tortured phrases",
-          weight: 30,
-          detail: "Matched against a known phrase list with an Aho-Corasick matcher.",
-        },
-        {
-          name: "Citation manipulation",
-          weight: 30,
-          detail: "Author repetition, citation density, retracted and irrelevant references.",
-        },
-        {
-          name: "Abstract similarity",
-          weight: 20,
-          detail: "Sentence-BERT embeddings compared with related papers from OpenAlex.",
-        },
-        {
-          name: "Metadata",
-          weight: 20,
-          detail: "Author emails, ORCID and geographic concentration of affiliations.",
-        },
-      ],
-      stack: ["React", "TypeScript", "Python", "FastAPI", "GROBID", "Sentence-BERT", "OpenAlex API"],
-      resultFrame: {
-        label: "Result page — decision first, then the reasons",
-        shots: [
+      resultLabel: "SUS usability score (16 participants)",
+      demoCta: "Watch 90-sec demo",
+      demoPlaceholder: "[PLACEHOLDER: video link]",
+      walkthroughCta: "Request a walkthrough",
+      walkthroughSubject: "Walkthrough: Paper Integrity Analyzer",
+      sourceNote:
+        "Source code is university property and not public. Happy to walk through the architecture.",
+      caseStudy: {
+        toggle: "Read the case study",
+        steps: [
           {
-            src: `${shotBase}/score.png`,
-            width: 876,
-            height: 206,
-            label: "Decision and score",
-            alt: "Result banner reading 'Final Decision: Likely Fake Paper' with a 63% score",
+            title: "Problem",
+            text: "Tools like Turnitin, Copyleaks and GPTZero show scores and highlights, but users often cannot tell why a document was flagged or what to do next.",
           },
           {
-            src: `${shotBase}/key-indicators.png`,
-            width: 1441,
-            height: 563,
-            label: "Key indicators",
-            alt: "List of five indicators, each marked with high, medium or low impact",
+            title: "Solution",
+            points: [
+              "A three-step flow: home page, drag-and-drop PDF upload, result page.",
+              "A result page in layers: the decision and score first, then the indicators, the evidence and recommended actions.",
+              "An analysis backend that combines four integrity indicators into one weighted risk score.",
+            ],
+          },
+          {
+            title: "Result",
+            text: "SUS 80.87 in a study with 16 participants from computer science, business, engineering and medicine. Above 80 counts as high usability.",
           },
         ],
+        indicatorsTitle: "Risk score weighting",
+        indicators: [
+          {
+            name: "Tortured phrases",
+            weight: 30,
+            detail: "Aho-Corasick matcher against a known phrase list.",
+          },
+          {
+            name: "Citation manipulation",
+            weight: 30,
+            detail: "Author repetition, citation density, retracted and irrelevant references.",
+          },
+          {
+            name: "Abstract similarity",
+            weight: 20,
+            detail: "Sentence Transformers embeddings compared with related papers from OpenAlex.",
+          },
+          {
+            name: "Metadata",
+            weight: 20,
+            detail: "Author emails, ORCID, geographic concentration.",
+          },
+        ],
+        techTitle: "Technology",
+        tech: ["React", "TypeScript", "Python", "FastAPI", "GROBID", "Aho-Corasick", "Sentence Transformers", "TF-IDF", "OpenAlex API"],
+        screensTitle: "More screens",
+        gallery: [
+          {
+            ...shots.upload,
+            label: "Upload",
+            alt: "Upload page with a drag-and-drop area for a PDF",
+          },
+          {
+            ...shots.evidence,
+            label: "Evidence",
+            alt: "Document view with suspicious passages highlighted in red and blue",
+          },
+          {
+            ...shots.related,
+            label: "Related papers",
+            alt: "List of related papers, each with a match percentage",
+          },
+          {
+            ...shots.actions,
+            label: "Actions",
+            alt: "List of recommended next steps with buttons to download the result or check again",
+          },
+        ],
+        note: "Built to support human review, not to replace it. The thesis focused on usability and explanation, not on detection accuracy.",
       },
-      gallery: [
-        {
-          src: `${shotBase}/upload.png`,
-          width: 1179,
-          height: 659,
-          label: "Upload",
-          alt: "Upload page with a drag-and-drop area for a PDF",
-        },
-        {
-          src: `${shotBase}/highlighted-text.png`,
-          width: 1444,
-          height: 630,
-          label: "Evidence in the document",
-          alt: "Document view with suspicious passages highlighted in red and blue",
-        },
-        {
-          src: `${shotBase}/related-papers.png`,
-          width: 1417,
-          height: 739,
-          label: "Related papers",
-          alt: "List of related papers, each with a match percentage",
-        },
-        {
-          src: `${shotBase}/recommended-actions.png`,
-          width: 1444,
-          height: 456,
-          label: "Recommended actions",
-          alt: "List of recommended next steps with buttons to download the result or check again",
-        },
-      ],
     },
+    moreTitle: "Other projects",
+    partLabel: "My part",
+    toolsLabel: "Tools",
     more: [
       {
-        tag: "University team project",
         name: "Article platform",
-        description:
-          "One REST API serving a Vue.js web app and a Flutter mobile app: accounts, articles and comments, with password hashing and pagination. Built in a Scrum team with user stories, tests and code reviews.",
-        stack: [".NET", "Vue.js", "Flutter", "REST API", "SQL"],
-      },
-      {
-        tag: "Personal project",
-        name: "This website",
-        description:
-          "A bilingual, statically generated portfolio with separate German and English routes, written from a plan and deployed on Vercel.",
-        stack: ["Next.js", "TypeScript", "Tailwind CSS"],
-      },
-    ],
-  },
-  services: {
-    eyebrow: "Services",
-    title: "What I can build for you",
-    items: [
-      {
-        name: "Web applications",
-        description:
-          "Interactive apps from the interface to the API: React and Next.js in front, REST APIs, databases and authentication behind.",
-        tags: ["React", "Next.js", "TypeScript", "FastAPI", "Node.js"],
-      },
-      {
-        name: "Websites",
-        description:
-          "New business sites and redesigns, or fixing the one you have: speed, bugs, clearer navigation and multilingual support.",
-        tags: ["Custom code", "WordPress", "i18n"],
-      },
-      {
-        name: "AI integration",
-        description:
-          "AI features inside your existing software and workflows, such as document analysis, semantic search and assistants.",
-        tags: ["Document analysis", "Semantic search", "Assistants"],
-      },
-    ],
-  },
-  experience: {
-    eyebrow: "Experience",
-    title: "Where I have worked",
-    items: [
-      {
-        company: "aiio GmbH",
-        location: "Magdeburg",
-        role: "Working Student, AI-based Software Development",
-        period: "June 2025 – February 2026",
-        context: "aiio builds a SaaS product for AI-supported process management on Microsoft 365.",
-        points: [
-          "Built and extended features in the product's React and TypeScript front end, from user story to code review.",
-          "Connected the interface to REST APIs to load, process and display backend data.",
-          "Made the interface multilingual with i18n and Strapi.",
-          "Contributed to specifications, user stories and system design.",
+        type: "University team project (Scrum)",
+        description: "A platform where users register, write and delete articles and comments.",
+        part: [
+          "Secure password-change process in the .NET backend",
+          "Connected it to the interface through REST APIs",
+          "Testing and code reviews",
         ],
+        tools: [".NET", "Vue.js", "Flutter", "SQL"],
+        extra: ["Team: [PLACEHOLDER: team size] students."],
       },
       {
-        company: "Mindful Minds Management",
-        location: "Munich",
-        role: "Software Developer Intern",
-        period: "September 2024 – December 2024",
-        points: [
-          "Restructured the site's layout and navigation to make it easier to use.",
-          "Improved performance and fixed technical issues found through regular testing.",
-          "Customised WordPress themes and plugins and extended existing features.",
+        name: "Algorithms in Java",
+        type: "University coursework",
+        description: "Own implementations of lists, trees, heaps, hashing and graphs.",
+        part: ["Implementation with a focus on runtime and object-oriented design"],
+        tools: ["Java"],
+        extra: [
+          "Shows strong fundamentals behind the web work.",
+          "[PLACEHOLDER: one concrete detail, e.g. hardest structure or a runtime comparison]",
         ],
       },
     ],
   },
   skills: {
-    eyebrow: "Skills",
+    label: "Skills",
     title: "What I work with",
     groups: [
       {
-        name: "Core stack",
-        primary: true,
-        items: ["TypeScript", "JavaScript", "React", "Next.js", "Python", "FastAPI", "REST APIs", "HTML", "CSS", "Git"],
+        name: "Languages",
+        icon: "code",
+        strong: 3,
+        items: ["TypeScript", "JavaScript", "Python", "Java", "HTML", "CSS"],
+      },
+      { name: "Frontend", icon: "layout", strong: 2, items: ["React", "Next.js", "Vue.js", "Flutter"] },
+      {
+        name: "Backend",
+        icon: "server",
+        strong: 2,
+        items: ["FastAPI", "Node.js", "Express", ".NET", "Spring Boot", "REST APIs"],
+      },
+      { name: "Databases", icon: "database", strong: 1, items: ["MongoDB", "MySQL", "SQL"] },
+      {
+        name: "AI and data",
+        icon: "brain",
+        strong: 2,
+        items: ["Sentence Transformers", "TF-IDF", "Aho-Corasick", "NLP", "OpenAlex"],
       },
       {
-        name: "Also worked with",
-        items: ["Java", "Spring Boot", ".NET", "Vue.js", "Node.js", "Express", "MongoDB", "MySQL", "WordPress", "Strapi"],
-      },
-      {
-        name: "AI and NLP",
-        items: ["Sentence-BERT embeddings", "Semantic similarity", "PDF processing with GROBID"],
-      },
-      {
-        name: "Ways of working",
-        items: ["Scrum", "Code reviews", "Testing", "Jira", "i18n", "JWT authentication"],
+        name: "Tools and methods",
+        icon: "wrench",
+        strong: 3,
+        items: ["Git", "Jira", "Scrum", "Testing", "Code reviews", "JWT authentication", "i18n"],
       },
     ],
   },
-  about: {
-    eyebrow: "About",
-    title: "Who you would be working with",
-    bio: [
-      "I am a software developer with a B.Sc. in Business Informatics from Otto von Guericke University Magdeburg. I have worked on a production SaaS product with React and TypeScript and built full-stack applications with Python and FastAPI.",
-      "What I care about most is software that people understand without a manual. I am looking for a full-time developer position, and I take on freelance projects.",
+  services: {
+    label: "Services",
+    title: "What I can build for you",
+    getsLabel: "You get",
+    items: [
+      {
+        name: "Web applications",
+        icon: "app",
+        wide: true,
+        description: "Interactive apps built with React, Next.js and TypeScript.",
+        gets: [
+          "An interface that is clear at first glance",
+          "Fast loading on phone and desktop",
+          "Clean code your team can keep building on",
+        ],
+        tags: ["React", "Next.js", "TypeScript"],
+      },
+      {
+        name: "AI integration",
+        icon: "sparkles",
+        wide: true,
+        description:
+          "AI features such as document analysis, semantic search and assistants, added to your software and workflows.",
+        gets: [
+          "A feature that fits your real process",
+          "Results explained in plain language",
+          "An honest view of what AI can and cannot do",
+        ],
+        tags: ["Document analysis", "Semantic search", "Assistants"],
+      },
+      {
+        name: "Business websites",
+        icon: "globe",
+        description: "New sites or redesigns, with WordPress or custom code.",
+        gets: [
+          "A modern, responsive design",
+          "Content you can edit yourself",
+          "German and English if you need both",
+        ],
+        tags: ["WordPress", "Custom code", "i18n"],
+      },
+      {
+        name: "Backend and APIs",
+        icon: "server",
+        description: "REST APIs, databases and authentication with Python/FastAPI or Node.js.",
+        gets: [
+          "A documented API",
+          "Secure login and password handling",
+          "A database structure that can grow",
+        ],
+        tags: ["FastAPI", "Node.js", "REST", "SQL"],
+      },
+      {
+        name: "Improving existing sites",
+        icon: "gauge",
+        description: "Speed, bug fixes, clearer navigation and new features in existing code.",
+        gets: [
+          "A short list of what is wrong and why",
+          "Fixes without breaking what works",
+          "Measurably faster pages",
+        ],
+        tags: ["Performance", "Bug fixes", "New features"],
+      },
     ],
-    photoPlaceholder: "Photo coming soon",
-    location: "Magdeburg, Germany · open to relocating",
-    educationTitle: "Education",
-    education: {
-      degree: "B.Sc. Business Informatics",
-      school: "Otto von Guericke University Magdeburg",
-      detail: "Completed July 2026",
-    },
-    languagesTitle: "Languages",
-    languages: [
-      { name: "German", level: "C1" },
-      { name: "English", level: "C1" },
-      { name: "Arabic", level: "Native" },
-    ],
-    certificatesTitle: "Certificates",
-    certificates: [
-      { name: "Node.js, Express, MongoDB", issuer: "Udemy" },
-      { name: "Introduction to Databases for Back-End Development", issuer: "Meta / Coursera, 2025" },
-      { name: "Programming in Python", issuer: "Meta / Coursera, 2023" },
+    closing: { text: "Have a project in mind?", button: "Get in touch" },
+  },
+  hobbies: {
+    label: "Hobbies",
+    title: "Outside of work",
+    motto: "Adapt to survive.",
+    sub: "New tools, new languages, new countries: I learn what the situation needs.",
+    items: [
+      { name: "Football", icon: "football" },
+      { name: "Travelling", icon: "plane" },
+      { name: "Reading", icon: "book" },
+      { name: "Chess", icon: "chess" },
     ],
   },
   contact: {
-    eyebrow: "Contact",
-    title: "Have a role or a project in mind?",
-    lead: "Write me a few lines about it. I usually reply within a day or two.",
-    emailLabel: "Send an email",
-    linkedinLabel: "Message me on LinkedIn",
+    label: "Contact",
+    title: "Let's talk",
+    lead: "Open to a full-time software engineer role and to freelance projects.",
+    emailTitle: "Email",
+    emailAction: "Write an email",
+    copy: "Copy",
+    copied: "Copied",
+    linkedinTitle: "LinkedIn",
+    linkedinAction: "Open profile",
+    cvTitle: "Download CV",
+    cvAction: "PDF, German",
   },
-  footer: { note: "Built with Next.js, TypeScript and Tailwind CSS." },
+  footer: { rights: "All rights reserved.", impressum: "Impressum" },
+  impressum: {
+    title: "Impressum",
+    back: "Back to the portfolio",
+    lawLabel: "Information according to § 5 DDG",
+    addressLabel: "Address",
+    addressPending: "To be added.",
+    contactLabel: "Contact",
+    responsibleLabel: "Responsible for the content",
+  },
 };
 
 const de: Content = {
   meta: {
-    title: "Moustafa Mohamed — Softwareentwickler",
+    title: "Moustafa Mohamed — Software Engineer",
     description:
-      "Softwareentwickler in Magdeburg. React und TypeScript an einem produktiven SaaS-Produkt, Full-Stack-Anwendungen mit Python und FastAPI. Offen für eine Festanstellung und für Freelance-Projekte.",
+      "Software Engineer in Magdeburg. Webanwendungen von Anfang bis Ende mit React, TypeScript, Python und FastAPI. Offen für eine Festanstellung und für Freelance-Projekte.",
   },
   nav: {
-    projects: "Projekte",
-    services: "Leistungen",
-    experience: "Erfahrung",
-    skills: "Skills",
     about: "Über mich",
+    experience: "Erfahrung",
+    projects: "Projekte",
+    skills: "Skills",
+    services: "Leistungen",
+    hobbies: "Hobbys",
     contact: "Kontakt",
+    sections: "Abschnitte",
   },
   hero: {
-    eyebrow: "Softwareentwickler · Magdeburg",
-    headline: "Ich entwickle Webanwendungen, die man auf den ersten Blick versteht.",
-    lead: "React und TypeScript an einem produktiven SaaS-Produkt. Eine Abschlussarbeit, deren Anwendung im Nutzertest 80,87 Punkte auf der System Usability Scale erreicht hat. Offen für eine Festanstellung als Entwickler und für Freelance-Projekte.",
+    badge: "Offen für Festanstellung und Freelance-Projekte",
+    title: "Software Engineer",
+    lead: "Ich entwickle Webanwendungen von Anfang bis Ende und nutze KI-Modelle, um meine Arbeit und mein Leben einfacher zu machen.",
     primaryCta: "Projekte ansehen",
-    secondaryCta: "Kontakt aufnehmen",
-    stats: [
-      { value: "80,87", label: "SUS-Score, Studie mit 16 Personen" },
-      { value: "9 Monate", label: "an einem produktiven SaaS-Produkt" },
-      { value: "DE · EN · AR", label: "C1, C1 und Muttersprache" },
+    cvCta: "Lebenslauf herunterladen",
+    cvNote: "PDF, Deutsch",
+    emailLabel: "E-Mail",
+    linkedinLabel: "LinkedIn",
+    photoAlt: "Porträt von Moustafa Mohamed",
+  },
+  about: {
+    label: "Über mich",
+    title: "Mit wem Sie arbeiten würden",
+    bio: [
+      "Ich bin Software Engineer in Magdeburg. Ich entwickle Webanwendungen von Anfang bis Ende: die Oberfläche mit React und TypeScript, die Logik dahinter mit Python und FastAPI oder Node.js. KI-Modelle nutze ich jeden Tag, um schneller zu arbeiten und mir das Leben einfacher zu machen.",
+      "Ich habe Wirtschaftsinformatik (B.Sc.) an der Otto-von-Guericke-Universität Magdeburg studiert. Diese Mischung aus Wirtschaft und Informatik prägt meine Arbeitsweise: Ich möchte verstehen, was ein Unternehmen braucht, bevor ich die erste Zeile Code schreibe. Genauso gern arbeite ich mich in eine bestehende Codebasis ein und erweitere sie um neue Funktionen.",
+      "Als Werkstudent bei aiio habe ich an einem produktiven SaaS-Produkt für KI-gestütztes Prozessmanagement gearbeitet. Ich habe User Stories in Funktionen umgesetzt, die Oberfläche an REST-APIs angebunden, mehrsprachige Ansichten gebaut und an Code-Reviews teilgenommen. Davor habe ich in einem Praktikum in München Struktur, Geschwindigkeit und Design von WordPress-Websites verbessert.",
+      "Für meine Bachelorarbeit habe ich den Paper Integrity Analyzer entworfen und entwickelt: eine Webanwendung, die wissenschaftliche Paper auf Anzeichen von Betrug prüft und das Ergebnis verständlich erklärt. In einer Studie mit 16 Testpersonen erreichte sie einen Usability-Score von 80,87 von 100. Dieses Projekt hat mir gezeigt, was mir am meisten Freude macht: Kompliziertes leicht verständlich zu machen.",
+      "Ich spreche Deutsch, Englisch und Arabisch und bin umzugsbereit. Ich suche eine Festanstellung als Software Engineer und übernehme außerdem Freelance-Projekte.",
+    ],
+    languagesTitle: "Sprachen",
+    languages: [
+      { name: "Deutsch", level: "C1", steps: 4 },
+      { name: "Englisch", level: "C1", steps: 4 },
+      { name: "Arabisch", level: "Muttersprache", steps: 5 },
+    ],
+    certificatesTitle: "Zertifikate",
+    certificates,
+  },
+  experience: {
+    label: "Erfahrung",
+    title: "Wo ich gearbeitet habe",
+    techLabel: "Technik",
+    educationLabel: "Ausbildung",
+    items: [
+      {
+        kind: "work",
+        title: "Werkstudent, KI-basierte Softwareentwicklung",
+        org: "aiio GmbH",
+        location: "Magdeburg",
+        period: "Juni 2025 – Februar 2026",
+        context: "SaaS-Produkt für KI-gestütztes Prozessmanagement auf Microsoft 365.",
+        points: [
+          "User Stories und Anforderungen mit React und TypeScript in Funktionen umgesetzt und bestehende Komponenten erweitert.",
+          "REST-APIs angebunden, um Backend-Daten abzurufen und in den Komponenten darzustellen.",
+          "An Code-Reviews, Tests und Fehleranalysen mitgewirkt.",
+          "Mehrsprachige Oberflächen mit i18n und Strapi umgesetzt.",
+        ],
+        tech: ["React", "TypeScript", "REST-APIs", "i18n", "Strapi"],
+      },
+      {
+        kind: "work",
+        title: "Praktikant Softwareentwicklung",
+        org: "Mindful Minds Management",
+        location: "München",
+        period: "September 2024 – Dezember 2024",
+        points: [
+          "Die Performance der Website verbessert und technische Fehler durch regelmäßige Tests behoben.",
+          "Das Frontend mit HTML und CSS entwickelt und angepasst.",
+          "Layout und Navigation neu strukturiert, damit die Website einfacher zu bedienen ist.",
+          "WordPress-Themes und -Plugins angepasst und bestehende Funktionen erweitert.",
+        ],
+        tech: ["HTML", "CSS", "WordPress"],
+      },
+      {
+        kind: "education",
+        title: "B.Sc. Wirtschaftsinformatik",
+        org: "Otto-von-Guericke-Universität Magdeburg",
+        location: "Magdeburg",
+        period: "Abschluss Juli 2026",
+        points: [],
+        tech: [],
+      },
     ],
   },
   projects: {
-    eyebrow: "Projekte",
+    label: "Projekte",
     title: "Arbeit zum Ansehen",
     featured: {
-      tag: "Bachelorarbeit · 2026",
+      meta: "Bachelorarbeit · Einzelprojekt · 2026",
       name: "Paper Integrity Analyzer",
       summary:
         "Eine Webanwendung, die ein wissenschaftliches PDF auf Warnzeichen für gefälschte Paper prüft und das Ergebnis verständlich erklärt.",
-      problemTitle: "Das Problem",
-      problem:
-        "Werkzeuge wie Turnitin, Copyleaks und GPTZero zeigen Scores und Markierungen. Warum ein Dokument auffällt und was als Nächstes zu tun ist, bleibt für Nutzer aber oft unklar.",
-      builtTitle: "Was ich gebaut habe",
-      built: [
-        "Einen Ablauf in drei Schritten: Startseite, PDF-Upload per Drag-and-drop, Ergebnisseite.",
-        "Eine Ergebnisseite in Ebenen: zuerst Entscheidung und Score, dann die Indikatoren, dann die Belege, dann empfohlene Schritte.",
-        "Ein Analyse-Backend, das vier Integritätsindikatoren zu einem gewichteten Risiko-Score verbindet.",
-      ],
-      resultTitle: "Das Ergebnis",
+      roleLabel: "Rolle",
+      role: "Design, Frontend, Backend",
+      shot: {
+        ...shots.score,
+        label: "Ergebnisseite",
+        alt: "Ergebnisbanner mit dem Text 'Final Decision: Likely Fake Paper' und einem Fake-Score von 63 %",
+      },
+      stack: ["React", "TypeScript", "Python", "FastAPI"],
       resultValue: "80,87",
-      result:
-        "Punkte auf der System Usability Scale in einer Studie mit 16 Teilnehmenden aus Informatik, Wirtschaft, Ingenieurwesen und Medizin. Über 80 gilt als hohe Gebrauchstauglichkeit.",
-      note: "Die Anwendung unterstützt die menschliche Prüfung und ersetzt sie nicht. Im Mittelpunkt der Arbeit standen Bedienbarkeit und Erklärbarkeit, nicht die Erkennungsgenauigkeit.",
-      indicatorsTitle: "So ist der Risiko-Score gewichtet",
-      indicators: [
-        {
-          name: "Tortured Phrases",
-          weight: 30,
-          detail: "Abgleich mit einer bekannten Phrasenliste über einen Aho-Corasick-Matcher.",
-        },
-        {
-          name: "Zitationsmanipulation",
-          weight: 30,
-          detail: "Autorenwiederholung, Zitationsdichte, zurückgezogene und irrelevante Quellen.",
-        },
-        {
-          name: "Abstract-Ähnlichkeit",
-          weight: 20,
-          detail: "Sentence-BERT-Embeddings im Vergleich mit verwandten Papern aus OpenAlex.",
-        },
-        {
-          name: "Metadaten",
-          weight: 20,
-          detail: "Autoren-E-Mails, ORCID und geografische Konzentration der Affiliationen.",
-        },
-      ],
-      stack: ["React", "TypeScript", "Python", "FastAPI", "GROBID", "Sentence-BERT", "OpenAlex API"],
-      resultFrame: {
-        label: "Ergebnisseite — erst die Entscheidung, dann die Gründe",
-        shots: [
+      resultLabel: "SUS-Usability-Score (16 Teilnehmende)",
+      demoCta: "90-Sekunden-Demo ansehen",
+      demoPlaceholder: "[PLACEHOLDER: Video-Link]",
+      walkthroughCta: "Walkthrough anfragen",
+      walkthroughSubject: "Walkthrough: Paper Integrity Analyzer",
+      sourceNote:
+        "Der Quellcode ist Eigentum der Universität und nicht öffentlich. Die Architektur zeige ich gern im Gespräch.",
+      caseStudy: {
+        toggle: "Fallstudie lesen",
+        steps: [
           {
-            src: `${shotBase}/score.png`,
-            width: 876,
-            height: 206,
-            label: "Entscheidung und Score",
-            alt: "Ergebnisbanner mit dem Text 'Final Decision: Likely Fake Paper' und einem Score von 63 %",
+            title: "Problem",
+            text: "Werkzeuge wie Turnitin, Copyleaks und GPTZero zeigen Scores und Markierungen. Warum ein Dokument auffällt und was als Nächstes zu tun ist, bleibt für Nutzer aber oft unklar.",
           },
           {
-            src: `${shotBase}/key-indicators.png`,
-            width: 1441,
-            height: 563,
-            label: "Indikatoren",
-            alt: "Liste mit fünf Indikatoren, jeweils mit hoher, mittlerer oder geringer Auswirkung markiert",
+            title: "Lösung",
+            points: [
+              "Ein Ablauf in drei Schritten: Startseite, PDF-Upload per Drag-and-drop, Ergebnisseite.",
+              "Eine Ergebnisseite in Ebenen: zuerst Entscheidung und Score, dann die Indikatoren, die Belege und empfohlene Schritte.",
+              "Ein Analyse-Backend, das vier Integritätsindikatoren zu einem gewichteten Risiko-Score verbindet.",
+            ],
+          },
+          {
+            title: "Ergebnis",
+            text: "SUS 80,87 in einer Studie mit 16 Teilnehmenden aus Informatik, Wirtschaft, Ingenieurwesen und Medizin. Über 80 gilt als hohe Gebrauchstauglichkeit.",
           },
         ],
+        indicatorsTitle: "Gewichtung des Risiko-Scores",
+        indicators: [
+          {
+            name: "Tortured Phrases",
+            weight: 30,
+            detail: "Aho-Corasick-Matcher gegen eine bekannte Phrasenliste.",
+          },
+          {
+            name: "Zitationsmanipulation",
+            weight: 30,
+            detail: "Autorenwiederholung, Zitationsdichte, zurückgezogene und irrelevante Quellen.",
+          },
+          {
+            name: "Abstract-Ähnlichkeit",
+            weight: 20,
+            detail: "Sentence-Transformers-Embeddings im Vergleich mit verwandten Papern aus OpenAlex.",
+          },
+          {
+            name: "Metadaten",
+            weight: 20,
+            detail: "Autoren-E-Mails, ORCID, geografische Konzentration.",
+          },
+        ],
+        techTitle: "Technik",
+        tech: ["React", "TypeScript", "Python", "FastAPI", "GROBID", "Aho-Corasick", "Sentence Transformers", "TF-IDF", "OpenAlex API"],
+        screensTitle: "Weitere Ansichten",
+        gallery: [
+          {
+            ...shots.upload,
+            label: "Upload",
+            alt: "Upload-Seite mit Drag-and-drop-Bereich für ein PDF",
+          },
+          {
+            ...shots.evidence,
+            label: "Belege",
+            alt: "Dokumentansicht mit rot und blau markierten auffälligen Textstellen",
+          },
+          {
+            ...shots.related,
+            label: "Verwandte Paper",
+            alt: "Liste verwandter Paper, jeweils mit prozentualer Übereinstimmung",
+          },
+          {
+            ...shots.actions,
+            label: "Schritte",
+            alt: "Liste empfohlener nächster Schritte mit Buttons zum Herunterladen des Ergebnisses und zur erneuten Prüfung",
+          },
+        ],
+        note: "Die Anwendung unterstützt die menschliche Prüfung und ersetzt sie nicht. Im Mittelpunkt der Arbeit standen Bedienbarkeit und Erklärbarkeit, nicht die Erkennungsgenauigkeit.",
       },
-      gallery: [
-        {
-          src: `${shotBase}/upload.png`,
-          width: 1179,
-          height: 659,
-          label: "Upload",
-          alt: "Upload-Seite mit Drag-and-drop-Bereich für ein PDF",
-        },
-        {
-          src: `${shotBase}/highlighted-text.png`,
-          width: 1444,
-          height: 630,
-          label: "Belege im Dokument",
-          alt: "Dokumentansicht mit rot und blau markierten auffälligen Textstellen",
-        },
-        {
-          src: `${shotBase}/related-papers.png`,
-          width: 1417,
-          height: 739,
-          label: "Verwandte Paper",
-          alt: "Liste verwandter Paper, jeweils mit prozentualer Übereinstimmung",
-        },
-        {
-          src: `${shotBase}/recommended-actions.png`,
-          width: 1444,
-          height: 456,
-          label: "Empfohlene Schritte",
-          alt: "Liste empfohlener nächster Schritte mit Buttons zum Herunterladen des Ergebnisses und zur erneuten Prüfung",
-        },
-      ],
     },
+    moreTitle: "Weitere Projekte",
+    partLabel: "Mein Teil",
+    toolsLabel: "Werkzeuge",
     more: [
       {
-        tag: "Teamprojekt an der Universität",
         name: "Artikelplattform",
+        type: "Teamprojekt an der Universität (Scrum)",
         description:
-          "Eine REST-API für eine Vue.js-Webanwendung und eine Flutter-App: Konten, Artikel und Kommentare, mit Passwort-Hashing und Paginierung. Entwickelt im Scrum-Team mit User Stories, Tests und Code-Reviews.",
-        stack: [".NET", "Vue.js", "Flutter", "REST-API", "SQL"],
-      },
-      {
-        tag: "Eigenes Projekt",
-        name: "Diese Website",
-        description:
-          "Ein zweisprachiges, statisch generiertes Portfolio mit eigenen deutschen und englischen Routen, nach einem Plan umgesetzt und auf Vercel veröffentlicht.",
-        stack: ["Next.js", "TypeScript", "Tailwind CSS"],
-      },
-    ],
-  },
-  services: {
-    eyebrow: "Leistungen",
-    title: "Was ich für Sie bauen kann",
-    items: [
-      {
-        name: "Webanwendungen",
-        description:
-          "Interaktive Anwendungen vom Interface bis zur API: vorne React und Next.js, dahinter REST-APIs, Datenbanken und Authentifizierung.",
-        tags: ["React", "Next.js", "TypeScript", "FastAPI", "Node.js"],
-      },
-      {
-        name: "Websites",
-        description:
-          "Neue Unternehmensseiten und Redesigns, oder die Verbesserung Ihrer bestehenden Seite: Ladezeit, Fehler, klarere Navigation und Mehrsprachigkeit.",
-        tags: ["Individueller Code", "WordPress", "i18n"],
-      },
-      {
-        name: "KI-Integration",
-        description:
-          "KI-Funktionen in Ihrer bestehenden Software und Ihren Abläufen, zum Beispiel Dokumentenanalyse, semantische Suche und Assistenten.",
-        tags: ["Dokumentenanalyse", "Semantische Suche", "Assistenten"],
-      },
-    ],
-  },
-  experience: {
-    eyebrow: "Erfahrung",
-    title: "Wo ich gearbeitet habe",
-    items: [
-      {
-        company: "aiio GmbH",
-        location: "Magdeburg",
-        role: "Werkstudent, KI-basierte Softwareentwicklung",
-        period: "Juni 2025 – Februar 2026",
-        context: "aiio entwickelt ein SaaS-Produkt für KI-gestütztes Prozessmanagement auf Microsoft 365.",
-        points: [
-          "Funktionen im React- und TypeScript-Frontend des Produkts entwickelt und erweitert, von der User Story bis zum Code-Review.",
-          "Das Interface an REST-APIs angebunden, um Backend-Daten zu laden, zu verarbeiten und darzustellen.",
-          "Die Oberfläche mit i18n und Strapi mehrsprachig gemacht.",
-          "An Spezifikationen, User Stories und Systemdesign mitgearbeitet.",
+          "Eine Plattform, auf der Nutzer sich registrieren und Artikel und Kommentare schreiben und löschen.",
+        part: [
+          "Sicherer Ablauf zum Ändern des Passworts im .NET-Backend",
+          "Anbindung an die Oberfläche über REST-APIs",
+          "Tests und Code-Reviews",
         ],
+        tools: [".NET", "Vue.js", "Flutter", "SQL"],
+        extra: ["Team: [PLACEHOLDER: Teamgröße] Studierende."],
       },
       {
-        company: "Mindful Minds Management",
-        location: "München",
-        role: "Praktikant Softwareentwicklung",
-        period: "September 2024 – Dezember 2024",
-        points: [
-          "Layout und Navigation der Website neu strukturiert, damit sie einfacher zu bedienen ist.",
-          "Die Performance verbessert und technische Fehler behoben, die bei regelmäßigen Tests auffielen.",
-          "WordPress-Themes und -Plugins angepasst und bestehende Funktionen erweitert.",
+        name: "Algorithmen in Java",
+        type: "Studienleistung an der Universität",
+        description: "Eigene Implementierungen von Listen, Bäumen, Heaps, Hashing und Graphen.",
+        part: ["Implementierung mit Fokus auf Laufzeit und objektorientiertes Design"],
+        tools: ["Java"],
+        extra: [
+          "Zeigt solide Grundlagen hinter der Webentwicklung.",
+          "[PLACEHOLDER: ein konkretes Detail, z. B. die schwierigste Struktur oder ein Laufzeitvergleich]",
         ],
       },
     ],
   },
   skills: {
-    eyebrow: "Skills",
+    label: "Skills",
     title: "Womit ich arbeite",
     groups: [
       {
-        name: "Kern-Stack",
-        primary: true,
-        items: ["TypeScript", "JavaScript", "React", "Next.js", "Python", "FastAPI", "REST-APIs", "HTML", "CSS", "Git"],
+        name: "Sprachen",
+        icon: "code",
+        strong: 3,
+        items: ["TypeScript", "JavaScript", "Python", "Java", "HTML", "CSS"],
+      },
+      { name: "Frontend", icon: "layout", strong: 2, items: ["React", "Next.js", "Vue.js", "Flutter"] },
+      {
+        name: "Backend",
+        icon: "server",
+        strong: 2,
+        items: ["FastAPI", "Node.js", "Express", ".NET", "Spring Boot", "REST-APIs"],
+      },
+      { name: "Datenbanken", icon: "database", strong: 1, items: ["MongoDB", "MySQL", "SQL"] },
+      {
+        name: "KI und Daten",
+        icon: "brain",
+        strong: 2,
+        items: ["Sentence Transformers", "TF-IDF", "Aho-Corasick", "NLP", "OpenAlex"],
       },
       {
-        name: "Außerdem eingesetzt",
-        items: ["Java", "Spring Boot", ".NET", "Vue.js", "Node.js", "Express", "MongoDB", "MySQL", "WordPress", "Strapi"],
-      },
-      {
-        name: "KI und NLP",
-        items: ["Sentence-BERT-Embeddings", "Semantische Ähnlichkeit", "PDF-Verarbeitung mit GROBID"],
-      },
-      {
-        name: "Arbeitsweise",
-        items: ["Scrum", "Code-Reviews", "Testing", "Jira", "i18n", "JWT-Authentifizierung"],
+        name: "Werkzeuge und Methoden",
+        icon: "wrench",
+        strong: 3,
+        items: ["Git", "Jira", "Scrum", "Testing", "Code-Reviews", "JWT-Authentifizierung", "i18n"],
       },
     ],
   },
-  about: {
-    eyebrow: "Über mich",
-    title: "Mit wem Sie arbeiten würden",
-    bio: [
-      "Ich bin Softwareentwickler mit einem B.Sc. in Wirtschaftsinformatik der Otto-von-Guericke-Universität Magdeburg. Ich habe mit React und TypeScript an einem produktiven SaaS-Produkt gearbeitet und Full-Stack-Anwendungen mit Python und FastAPI entwickelt.",
-      "Am wichtigsten ist mir Software, die man ohne Handbuch versteht. Ich suche eine Festanstellung als Entwickler und übernehme Freelance-Projekte.",
+  services: {
+    label: "Leistungen",
+    title: "Was ich für Sie bauen kann",
+    getsLabel: "Sie erhalten",
+    items: [
+      {
+        name: "Webanwendungen",
+        icon: "app",
+        wide: true,
+        description: "Interaktive Anwendungen mit React, Next.js und TypeScript.",
+        gets: [
+          "Eine Oberfläche, die man auf den ersten Blick versteht",
+          "Kurze Ladezeiten auf Smartphone und Desktop",
+          "Sauberen Code, auf dem Ihr Team weiterbauen kann",
+        ],
+        tags: ["React", "Next.js", "TypeScript"],
+      },
+      {
+        name: "KI-Integration",
+        icon: "sparkles",
+        wide: true,
+        description:
+          "KI-Funktionen wie Dokumentenanalyse, semantische Suche und Assistenten, eingebunden in Ihre Software und Ihre Abläufe.",
+        gets: [
+          "Eine Funktion, die zu Ihrem tatsächlichen Ablauf passt",
+          "Verständlich erklärte Ergebnisse",
+          "Eine ehrliche Einschätzung, was KI kann und was nicht",
+        ],
+        tags: ["Dokumentenanalyse", "Semantische Suche", "Assistenten"],
+      },
+      {
+        name: "Unternehmenswebsites",
+        icon: "globe",
+        description: "Neue Websites oder Redesigns, mit WordPress oder individuellem Code.",
+        gets: [
+          "Ein modernes, responsives Design",
+          "Inhalte, die Sie selbst bearbeiten können",
+          "Deutsch und Englisch, wenn Sie beides brauchen",
+        ],
+        tags: ["WordPress", "Individueller Code", "i18n"],
+      },
+      {
+        name: "Backend und APIs",
+        icon: "server",
+        description: "REST-APIs, Datenbanken und Authentifizierung mit Python/FastAPI oder Node.js.",
+        gets: [
+          "Eine dokumentierte API",
+          "Sicheren Login und sicheren Umgang mit Passwörtern",
+          "Eine Datenbankstruktur, die mitwachsen kann",
+        ],
+        tags: ["FastAPI", "Node.js", "REST", "SQL"],
+      },
+      {
+        name: "Bestehende Websites verbessern",
+        icon: "gauge",
+        description:
+          "Ladezeit, Fehlerbehebung, klarere Navigation und neue Funktionen in bestehendem Code.",
+        gets: [
+          "Eine kurze Liste, was nicht stimmt und warum",
+          "Korrekturen, ohne Funktionierendes zu beschädigen",
+          "Messbar schnellere Seiten",
+        ],
+        tags: ["Performance", "Fehlerbehebung", "Neue Funktionen"],
+      },
     ],
-    photoPlaceholder: "Foto folgt",
-    location: "Magdeburg · umzugsbereit",
-    educationTitle: "Ausbildung",
-    education: {
-      degree: "B.Sc. Wirtschaftsinformatik",
-      school: "Otto-von-Guericke-Universität Magdeburg",
-      detail: "Abschluss Juli 2026",
-    },
-    languagesTitle: "Sprachen",
-    languages: [
-      { name: "Deutsch", level: "C1" },
-      { name: "Englisch", level: "C1" },
-      { name: "Arabisch", level: "Muttersprache" },
-    ],
-    certificatesTitle: "Zertifikate",
-    certificates: [
-      { name: "Node.js, Express, MongoDB", issuer: "Udemy" },
-      { name: "Introduction to Databases for Back-End Development", issuer: "Meta / Coursera, 2025" },
-      { name: "Programming in Python", issuer: "Meta / Coursera, 2023" },
+    closing: { text: "Sie haben ein Projekt im Kopf?", button: "Kontakt aufnehmen" },
+  },
+  hobbies: {
+    label: "Hobbys",
+    title: "Neben der Arbeit",
+    motto: "Adapt to survive.",
+    sub: "Neue Werkzeuge, neue Sprachen, neue Länder: Ich lerne, was die Situation verlangt.",
+    items: [
+      { name: "Fußball", icon: "football" },
+      { name: "Reisen", icon: "plane" },
+      { name: "Lesen", icon: "book" },
+      { name: "Schach", icon: "chess" },
     ],
   },
   contact: {
-    eyebrow: "Kontakt",
-    title: "Sie haben eine Stelle oder ein Projekt?",
-    lead: "Schreiben Sie mir ein paar Zeilen dazu. Ich antworte in der Regel innerhalb von ein bis zwei Tagen.",
-    emailLabel: "E-Mail schreiben",
-    linkedinLabel: "Nachricht auf LinkedIn",
+    label: "Kontakt",
+    title: "Lassen Sie uns sprechen",
+    lead: "Offen für eine Festanstellung als Software Engineer und für Freelance-Projekte.",
+    emailTitle: "E-Mail",
+    emailAction: "E-Mail schreiben",
+    copy: "Kopieren",
+    copied: "Kopiert",
+    linkedinTitle: "LinkedIn",
+    linkedinAction: "Profil öffnen",
+    cvTitle: "Lebenslauf herunterladen",
+    cvAction: "PDF, Deutsch",
   },
-  footer: { note: "Gebaut mit Next.js, TypeScript und Tailwind CSS." },
+  footer: { rights: "Alle Rechte vorbehalten.", impressum: "Impressum" },
+  impressum: {
+    title: "Impressum",
+    back: "Zurück zum Portfolio",
+    lawLabel: "Angaben gemäß § 5 DDG",
+    addressLabel: "Anschrift",
+    addressPending: "Wird ergänzt.",
+    contactLabel: "Kontakt",
+    responsibleLabel: "Verantwortlich für den Inhalt",
+  },
 };
 
 export const content: Record<Locale, Content> = { en, de };

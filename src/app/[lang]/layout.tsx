@@ -44,7 +44,13 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
       lang={lang}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="min-h-full flex flex-col font-sans">
+        {/* Without JavaScript nothing would reveal the sections, so show them */}
+        <noscript>
+          <style>{".reveal{opacity:1;transform:none}"}</style>
+        </noscript>
+        {children}
+      </body>
     </html>
   );
 }

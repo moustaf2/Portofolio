@@ -1,35 +1,77 @@
+import { ArrowUpRight, Download, Mail } from "lucide-react";
 import { contact, type Content } from "@/data/profile";
+import { BinaryNetwork } from "./BinaryNetwork";
+import { CopyButton } from "./CopyButton";
+import { Reveal } from "./Reveal";
+import { GlassCard, LinkedInIcon, SectionLabel } from "./ui";
 
-export function Contact({ t }: { t: Content["contact"] }) {
+const iconBox =
+  "flex size-10 items-center justify-center rounded-xl border border-accent/25 bg-accent/10 text-accent";
+const action = "inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline";
+
+export function Contact({ t, number }: { t: Content["contact"]; number: number }) {
   return (
-    <section id="contact" className="border-t border-line/60">
-      <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
-        <div className="rounded-2xl border border-line bg-[radial-gradient(ellipse_at_top_left,rgba(56,189,248,0.14),transparent_60%)] bg-surface p-8 sm:p-14">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent">{t.eyebrow}</p>
-          <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl">
-            {t.title}
-          </h2>
-          <p className="mt-4 max-w-xl text-lg leading-8 text-muted">{t.lead}</p>
+    <section id="contact" className="relative overflow-hidden">
+      <div aria-hidden className="section-line" />
+      <div aria-hidden className="glow glow-indigo -left-32 top-10 size-[28rem] opacity-20" />
+      <div aria-hidden className="glow glow-cyan -bottom-40 right-[6%] size-[30rem] opacity-20" />
+      <BinaryNetwork />
 
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <a
-              href={`mailto:${contact.email}`}
-              className="rounded-md bg-accent px-5 py-3 text-center font-medium text-accent-ink transition-opacity hover:opacity-90"
-            >
-              {t.emailLabel}
-            </a>
+      <Reveal className="relative mx-auto max-w-4xl px-5 py-24 text-center sm:px-8 sm:py-32">
+        <SectionLabel number={number} label={t.label} />
+        <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-5xl">{t.title}</h2>
+        <p className="mx-auto mt-4 max-w-xl text-lg leading-8 text-muted">{t.lead}</p>
+
+        <div className="mt-12 grid gap-5 text-left md:grid-cols-3">
+          <GlassCard lift className="flex flex-col gap-4 p-6">
+            <span className={iconBox}>
+              <Mail aria-hidden className="size-5" />
+            </span>
+            <h3 className="font-semibold">{t.emailTitle}</h3>
+            <p className="break-all font-mono text-sm text-muted">{contact.email}</p>
+            <div className="mt-auto flex flex-wrap items-center gap-3">
+              <a href={`mailto:${contact.email}`} className={action}>
+                {t.emailAction}
+              </a>
+              <CopyButton value={contact.email} label={t.copy} done={t.copied} />
+            </div>
+          </GlassCard>
+
+          <GlassCard lift className="flex flex-col gap-4 p-6">
+            <span className={iconBox}>
+              <LinkedInIcon />
+            </span>
+            <h3 className="font-semibold">{t.linkedinTitle}</h3>
+            <p className="font-mono text-sm text-muted">{contact.shortName}</p>
             <a
               href={contact.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-md border border-line px-5 py-3 text-center font-medium transition-colors hover:bg-surface-2"
+              className={`mt-auto ${action}`}
             >
-              {t.linkedinLabel}
+              {t.linkedinAction}
+              <ArrowUpRight aria-hidden className="size-4" />
             </a>
-          </div>
-          <p className="mt-6 break-all font-mono text-sm text-muted">{contact.email}</p>
+          </GlassCard>
+
+          <GlassCard lift className="flex flex-col gap-4 p-6">
+            <span className={iconBox}>
+              <Download aria-hidden className="size-5" />
+            </span>
+            <h3 className="font-semibold">{t.cvTitle}</h3>
+            <p className="font-mono text-sm text-muted">{t.cvAction}</p>
+            <a
+              href={contact.cv}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`mt-auto ${action}`}
+            >
+              {t.cvTitle}
+              <ArrowUpRight aria-hidden className="size-4" />
+            </a>
+          </GlassCard>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

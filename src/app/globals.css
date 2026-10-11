@@ -1,14 +1,19 @@
 @import "tailwindcss";
 
 @theme {
+  --color-base: #070d1f;
   --color-bg: #0a1124;
   --color-surface: #101a35;
   --color-surface-2: #172447;
   --color-line: #23325e;
   --color-ink: #e8edf7;
   --color-muted: #9ba9c9;
+  /* Lighter grey for body text that has to be read, not just scanned */
+  --color-soft: #c5cfe4;
   --color-accent: #38bdf8;
   --color-accent-ink: #052033;
+  --color-indigo: #6366f1;
+  --color-ok: #34d399;
 }
 
 @theme inline {
@@ -19,10 +24,11 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
+  background: var(--color-base);
 }
 
 body {
-  background: var(--color-bg);
+  background: linear-gradient(to bottom, var(--color-base), var(--color-bg));
   color: var(--color-ink);
 }
 
@@ -31,8 +37,111 @@ body {
   color: var(--color-accent-ink);
 }
 
+@layer components {
+  .glass {
+    background: rgba(16, 26, 53, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(155, 169, 201, 0.14);
+    border-top-color: rgba(200, 225, 255, 0.3);
+    border-radius: 16px;
+  }
+
+  .glass-lift {
+    transition:
+      transform 200ms ease,
+      border-color 200ms ease;
+  }
+
+  .glass-lift:hover {
+    transform: translateY(-2px);
+    border-color: rgba(56, 189, 248, 0.35);
+  }
+
+  /* Thin gradient line between sections, in place of a plain border */
+  .section-line {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(56, 189, 248, 0.45) 30%,
+      rgba(99, 102, 241, 0.45) 70%,
+      transparent
+    );
+  }
+
+  /* Large soft colour fields behind the content */
+  .glow {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(90px);
+    pointer-events: none;
+    animation: glow-drift 28s ease-in-out infinite alternate;
+  }
+
+  .glow-cyan {
+    background: var(--color-accent);
+  }
+
+  .glow-indigo {
+    background: var(--color-indigo);
+    animation-duration: 36s;
+    animation-direction: alternate-reverse;
+  }
+
+  .photo-ring {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-indigo));
+    box-shadow:
+      0 0 60px rgba(56, 189, 248, 0.3),
+      0 0 0 6px rgba(56, 189, 248, 0.06);
+  }
+
+  .photo-fill {
+    /* Navy to a low-strength cyan, opaque so the ring does not shine through */
+    background: linear-gradient(160deg, #172447 20%, color-mix(in srgb, #38bdf8 28%, #172447));
+  }
+
+  /* Sections fade in and rise once when they scroll into view (see Reveal) */
+  .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 600ms ease,
+      transform 600ms ease;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes glow-drift {
+  from {
+    transform: translate3d(-3%, -2%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(4%, 3%, 0) scale(1.08);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .glow {
+    animation: none;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .glass-lift,
+  .glass-lift:hover {
+    transform: none;
+    transition: none;
   }
 }

@@ -206,7 +206,7 @@ const en: Content = {
   },
   hero: {
     badge: "Open to full-time roles and freelance projects",
-    title: "Software Engineer",
+    title: "Software Developer",
     lead: "I started by writing every line by hand. Now I work with AI to build faster, then review, test, and optimize the result so it’s reliable and fast.",
     primaryCta: "View projects",
     cvCta: "Download CV",

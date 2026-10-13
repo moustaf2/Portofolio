@@ -15,4 +15,4 @@ Open [http://localhost:3000](http://localhost:3000). The root URL redirects to `
 
 All texts for both languages live in `src/data/profile.ts`. Each section of the page is a component in `src/components/`. Screenshots are in `public/projects/paper-integrity/`.
 
-The photo is `public/moustafa.webp` (square, transparent background) and the CV is `public/cv/Moustafa-Mohamed-Lebenslauf.pdf`; replace the files to update them. The design brief is `REDESIGN_PLAN.md`.
+The photo is `public/moustafa.png` and the CV is `public/cv/Moustafa-Mohamed-Lebenslauf.pdf`; replace the files to update them. The design brief is `REDESIGN_PLAN.md`.

@@ -26,11 +26,12 @@ export function Hero({ t }: { t: Content["hero"] }) {
             <Image
               src={contact.photo}
               alt={t.photoAlt}
-              width={640}
-              height={640}
+              width={1080}
+              height={1440}
               sizes="(min-width: 640px) 220px, 160px"
               preload
-              className="size-full object-cover"
+              // Portrait photo: keep the top square and zoom slightly so the face fills the circle
+              className="size-full origin-[50%_55%] scale-[1.5] object-cover object-top"
             />
           </div>
         </div>

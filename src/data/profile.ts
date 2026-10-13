@@ -13,7 +13,7 @@ export const contact = {
   linkedin: "https://www.linkedin.com/in/moustafa-mohamed-51bb66232/",
   // German CV for both languages until an English one exists
   cv: "/cv/Moustafa-Mohamed-Lebenslauf.pdf",
-  photo: "/moustafa.webp",
+  photo: "/moustafa.png",
   // TODO: link to the 90-second demo video; while empty, the button shows a placeholder
   demoUrl: "",
 };
